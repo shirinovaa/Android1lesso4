@@ -1,14 +1,16 @@
-package com.example.android1lesso4;
+package com.example.android1lesso4.activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.android1lesso4.adapter.BooksAdapter;
 import com.example.android1lesso4.data.BooksClient;
 import com.example.android1lesso4.data.model.BooksModel;
 import com.example.android1lesso4.databinding.ActivityMainBinding;
+import com.example.android1lesso4.interaces.OnClick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +33,15 @@ public class MainActivity extends AppCompatActivity {
       list = BooksClient.getBooks();
       booksAdapter = new BooksAdapter(list);
         binding.recyclerView.setAdapter(booksAdapter);
+
+        booksAdapter.setOnClick(new OnClick() {
+            @Override
+            public void onClickItem(int position) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("kay", list.get(position).getBooksName());
+                intent.putExtra("lok", list.get(position).getBookDescription());
+                startActivity(intent);
+            }
+        });
     }
 }

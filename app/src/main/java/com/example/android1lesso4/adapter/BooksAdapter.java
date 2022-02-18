@@ -11,12 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android1lesso4.R;
 import com.example.android1lesso4.data.model.BooksModel;
+import com.example.android1lesso4.interaces.OnClick;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksHolder>{
        ArrayList<BooksModel> list = new ArrayList<>();
+
+       OnClick onClick;
+
+    public void setOnClick(OnClick onClick) {
+        this.onClick = onClick;
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     public BooksAdapter(ArrayList<BooksModel> list) {
@@ -50,7 +57,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksHolder>
 
             public void onBind( BooksModel booksModel) {
                 tvValue.setText(booksModel.getBooksName());
-
+ itemView.setOnClickListener(new View.OnClickListener() {
+     @Override
+     public void onClick(View view) {
+         onClick.onClickItem(getAdapterPosition());
+     }
+ });
             }
         }
     }
